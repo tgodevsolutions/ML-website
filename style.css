@@ -1,0 +1,411 @@
+/* =========================================================
+   Loughran Osteopathy — Global Styles (clean)
+   ========================================================= */
+
+/* ---------------------------
+   Design tokens
+   --------------------------- */
+:root{
+  --indigo-900:#2f2bb1;
+  --indigo-600:#6d7ac9;
+  --mint-100:#afeee9;
+
+  --ink-900:#111316;
+  --ink-700:#2d3640;
+  --ink-150:#e7ecf1;
+  --white:#fff;
+
+  --container:1120px;
+  --radius-xl:1.25rem;
+  --radius-lg:.875rem;
+
+  --shadow-sm:0 6px 18px rgba(33,37,41,.08);
+  --shadow-md:0 14px 36px rgba(33,37,41,.12);
+
+  --font-display:"Poppins",system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
+  --font-sans:"Inter",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+
+  --sp-1:.5rem; --sp-2:1rem; --sp-3:1.5rem; --sp-4:2rem; --sp-5:3rem; --sp-6:4rem;
+}
+
+/* ---------------------------
+   Base
+   --------------------------- */
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0;color:var(--ink-900);background:var(--white);font-family:var(--font-sans);line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+img{max-width:100%;height:auto;display:block}
+a{color:var(--indigo-900);text-decoration:none}
+a:hover{text-decoration:underline}
+h1,h2,h3{font-family:var(--font-display);line-height:1.2;margin:0 0 var(--sp-2);color:var(--ink-900)}
+h1{font-size:clamp(2rem,2.8vw + 1rem,3rem);font-weight:700}
+h2{font-size:clamp(1.5rem,1.4vw + 1rem,2rem);font-weight:700}
+h3{font-size:1.125rem;font-weight:600}
+p{margin:0 0 var(--sp-2);color:var(--ink-700)}
+.container{width:min(100% - 2rem,var(--container));margin-inline:auto}
+
+/* accessibility */
+.skip-link{position:absolute;left:-9999px;top:0;padding:.5rem .75rem;background:var(--indigo-900);color:#fff;z-index:10000}
+.skip-link:focus{left:.5rem}
+:focus-visible{outline:3px solid var(--indigo-600);outline-offset:2px}
+
+/* ---------------------------
+   Buttons
+   --------------------------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.75rem 1rem;border-radius:var(--radius-lg);border:2px solid transparent;font-weight:600;transition:transform .04s ease,box-shadow .2s ease,background-color .2s ease,color .2s ease,border-color .2s ease;text-decoration:none;will-change:transform}
+.btn:hover{transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+.btn-lg{padding:1rem 1.25rem}
+.btn-primary{background:var(--indigo-900);color:#fff;box-shadow:var(--shadow-sm)}
+.btn-primary:hover{background:var(--indigo-600);text-decoration:none}
+.btn-secondary{background:var(--indigo-600);color:#fff}
+.btn-secondary:hover{background:var(--indigo-900);text-decoration:none}
+.btn-outline{background:transparent;color:var(--indigo-900);border-color:var(--indigo-900)}
+.btn-outline:hover{background:var(--indigo-900);color:#fff;text-decoration:none}
+
+/* ---------------------------
+   Header / Navigation
+   --------------------------- */
+.site-header{
+  position:fixed; top:0; left:0; right:0;
+  z-index:1000;
+  background:#fff;
+  border-bottom:1px solid var(--ink-150);
+  box-shadow:0 6px 18px rgba(17,19,22,.06);
+}
+/* push page below fixed header */
+body{ padding-top:96px; }
+
+/* full-width header with tight gutters */
+.site-header .container{
+  width:100%;
+  max-width:none;
+  padding-left:16px;
+  padding-right:8px;      /* tighter so the menu hugs the right edge */
+}
+
+/* three zones: left brand | middle quickbar | right burger */
+.contact-stack{ min-width:max-content; }
+.btn-book{ white-space:nowrap; justify-self:end; }
+
+/* left: brand */
+.brand{display:inline-flex;align-items:center;gap:.75rem;text-decoration:none}
+.brand-logo{width:72px;height:72px;border-radius:50%;object-fit:contain;background:#fff;padding:4px;box-shadow:var(--shadow-sm)}
+.brand-text{font-weight:700;color:var(--ink-900);letter-spacing:.2px}
+
+/* middle: contact stack + book button */
+.quickbar{
+  display:flex;
+  align-items:center;
+  gap:64px;                 /* <— more space between contact and Book */
+}
+.contact-stack{display:flex;flex-direction:column;gap:6px;line-height:1.2}
+.contact-line{display:inline-flex;align-items:center;gap:8px;color:var(--ink-900);font-weight:600;text-decoration:none}
+.contact-line:hover{text-decoration:underline}
+.btn-book{white-space:nowrap}
+
+/* right: hamburger */
+.nav-toggle{
+  display:inline-grid; place-items:center;
+  width:44px; height:44px; border:0; border-radius:.675rem;
+  background:var(--mint-100); cursor:pointer; flex:0 0 auto;
+}
+.nav-toggle .bar{display:block;width:22px;height:2px;background:var(--indigo-900);margin:4px auto;border-radius:2px}
+
+/* drawer (all pages) */
+.site-nav{
+  position:absolute; inset:calc(100% + 1px) 0 auto 0;
+  background:#fff; border-bottom:1px solid var(--ink-150);
+  box-shadow:0 10px 20px rgba(17,19,22,.06);
+  transform-origin:top; transform:scaleY(0); transition:transform .2s ease;
+}
+.site-nav.open{transform:scaleY(1)}
+.site-nav ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column}
+.site-nav li a,.site-nav li .btn{display:block;padding:1rem;border-radius:0;color:var(--ink-900);font-weight:600;text-decoration:none}
+.site-nav li .btn{margin:.25rem 1rem 1rem}
+
+/* drawer link states */
+.site-nav.open a:hover,
+.site-nav.open a:focus-visible{background:rgba(47,43,177,.08)}
+.site-nav a[aria-current="page"]{color:var(--indigo-900);background:rgba(47,43,177,.12)}
+
+/* mobile: hide quickbar, keep even left|right */
+@media (max-width:900px){
+  .quickbar{display:none}
+}
+
+
+/* ---------------------------
+   HERO (shared scaffolding)
+   --------------------------- */
+.hero{position:relative;z-index:1;padding:clamp(3rem,5vw + 1rem,7rem) 0;border-bottom:0;overflow:visible}
+/* Home hero: 2 columns (copy | info) */
+body.home .hero-grid{
+  display:grid;
+  grid-template-columns:1.1fr 0.9fr;
+  gap:48px;
+  align-items:start;
+  min-height:56vh;
+  position:relative;
+  z-index:2;
+}
+@media (max-width:900px){
+  body.home .hero-grid{grid-template-columns:1fr;gap:var(--sp-5)}
+}
+/* Home hero info panel (right column) */
+body.home .hero-info{
+  color:#fff;
+  background:rgba(17,19,22,.22);
+  border:1px solid rgba(255,255,255,.25);
+  border-radius:16px;
+  padding:16px 18px;
+  box-shadow:0 6px 18px rgba(0,0,0,.15);
+  backdrop-filter:blur(2px);
+}
+body.home .hero-info .info-row{
+  display:grid; grid-template-columns:auto 1fr; gap:12px; margin:0 0 14px;
+}
+body.home .hero-info .info-ico{font-size:20px;line-height:1.2;opacity:.9}
+body.home .hero-info .hours{list-style:none;margin:8px 0 0;padding:0}
+body.home .hero-info .hours li{margin:2px 0}
+
+/* ---------------------------
+   HOME hero (photo + tint + CURVE)
+   --------------------------- */
+body.home .hero{
+  position: relative;
+  min-height: 520px;
+  padding: 120px 0 100px;
+  color: #fff;
+  background-image:
+    linear-gradient(to top,rgba(47,43,177,.55) 0%,rgba(109,122,201,.35) 40%,rgba(109,122,201,.15) 100%),
+    url("Images/ML-home-background.png");
+  background-position:center 80%, center 80%;
+  background-size:cover, cover;
+  background-repeat:no-repeat, no-repeat;
+  border-top-right-radius:0;
+  border-bottom-right-radius:clamp(140px,20vw,420px);
+  overflow:hidden;
+}
+body.home .hero::after{
+  content:""; position:absolute; inset:0; z-index:2; pointer-events:none;
+  border-top-right-radius:0; border-bottom-right-radius:inherit;
+  box-shadow:inset -36px 0 0 0 #B6C1FF;
+}
+body.home .hero::before{
+  content:""; position:absolute; inset:0; z-index:1; pointer-events:none;
+  border-top-right-radius:0; border-bottom-right-radius:inherit;
+  box-shadow:inset -72px 0 0 0 var(--indigo-900);
+}
+@media (max-width:900px){
+  body.home .hero::after{ box-shadow:inset -28px 0 0 0 #B6C1FF }
+  body.home .hero::before{ box-shadow:inset -56px 0 0 0 var(--indigo-900) }
+}
+@media (max-width:900px){
+  body.home .hero::after{
+    display:block;
+    background:radial-gradient(circle at 125% 50%,#fff 0 5%,rgba(109,122,201,.30) 5% 8%,rgba(47,43,177,.35) 8% 11%,transparent 11% 100%);
+  }
+}
+body.home .hero h1, body.home .hero p{color:#fff}
+
+/* ---------------------------
+   NON-HOME hero (mint gradient, no overlays)
+   --------------------------- */
+body:not(.home) .hero{
+  padding:72px 0 56px;
+  background:
+    radial-gradient(1200px 600px at 85% 5%,rgba(255,255,255,.55) 0%,rgba(255,255,255,0) 60%),
+    linear-gradient(180deg,#c9f3ee 0%,#bfeae6 35%,#b5e2de 60%,#e9f6f3 100%);
+}
+body:not(.home) .hero::before, body:not(.home) .hero::after{content:none !important}
+body:not(.home) .hero h1, body:not(.home) .hero p, body:not(.home) .hero .btn.btn-outline{color:var(--ink-900)}
+body:not(.home) .hero .hero-grid{
+  display:grid; grid-template-columns:1.15fr 0.85fr; align-items:center; gap:48px;
+}
+body:not(.home) .hero img{
+  display:block; max-width:520px; width:100%; height:auto; margin:0 auto; border-radius:20px; box-shadow:0 12px 36px rgba(0,0,0,.15);
+}
+body:not(.home) .hero .hero-media{display:flex;justify-content:center}
+@media (max-width:900px){
+  body:not(.home) .hero .hero-grid{grid-template-columns:1fr;gap:28px}
+  body:not(.home) .hero img{max-width:420px}
+}
+
+/* ---------------------------
+   Sections
+   --------------------------- */
+.trust{background:#fff;padding:var(--sp-4) 0}
+.trust-inner{display:grid;align-items:center}
+.trust-badge{display:grid;grid-template-columns:auto 1fr;gap:var(--sp-2);padding:var(--sp-2);border:1px solid var(--ink-150);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);background:#fbfcff}
+.icon-circle{width:48px;height:48px;border-radius:999px;display:grid;place-items:center;color:var(--indigo-900);background:var(--mint-100)}
+
+.about-preview{padding:var(--sp-5) 0;background:#fff}
+.split{display:grid;grid-template-columns:536px 536px;gap:var(--sp-5);align-items:start;justify-content:center}
+.about-preview .about-image, .about-preview .list-cards{width:536px}
+.about-preview .about-image img{width:100%;height:auto;border-radius:var(--radius-xl);box-shadow:var(--shadow-md)}
+@media (max-width:1120px){
+  .split{grid-template-columns:1fr}
+  .about-preview .about-image,.about-preview .list-cards{width:100%}
+}
+.list-cards{list-style:none;margin:0;padding:0;display:grid;gap:var(--sp-2)}
+.list-cards li{border:1px solid var(--ink-150);border-radius:var(--radius-lg);padding:var(--sp-2);background:#fcfeff;box-shadow:var(--shadow-sm)}
+
+.what-is{padding:var(--sp-5) 0 var(--sp-5);background:linear-gradient(0deg,#f7fbfb 0%,var(--mint-100) 100%)}
+.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-2);margin-top:var(--sp-3)}
+.feature{background:#fff;border:1px solid var(--ink-150);border-radius:var(--radius-lg);padding:var(--sp-2);box-shadow:var(--shadow-sm)}
+.center{text-align:center;margin-top:var(--sp-3)}
+@media (max-width:900px){.feature-grid{grid-template-columns:1fr}}
+
+.cta-banner{padding:var(--sp-5) 0;background:radial-gradient(800px 500px at -10% 0%,rgba(47,43,177,.35),transparent 55%),linear-gradient(135deg,var(--indigo-600) 0%,var(--indigo-900) 100%);color:#fff}
+.cta-inner{text-align:center}
+.cta-inner p{color:#f3f5ff}
+.cta-actions{display:inline-flex;gap:.75rem;flex-wrap:wrap;margin-top:var(--sp-2)}
+.cta-banner .btn-outline{color:#fff;border-color:#fff}
+.cta-banner .btn-outline:hover{background:#fff;color:var(--indigo-900)}
+
+.contact-strip{padding:var(--sp-5) 0;background:#fff}
+.contact-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:var(--sp-4)}
+.contact-list{list-style:none;padding:0;margin:0;display:grid;gap:.35rem}
+.social{display:inline-flex;align-items:center;gap:.5rem;font-weight:700}
+@media (max-width:900px){.contact-grid{grid-template-columns:1fr}}
+
+/* ---------------------------
+   Footer
+   --------------------------- */
+.site-footer{background:#0f1133;color:#cfd6ff;padding:var(--sp-4) 0}
+.footer-inner{display:flex;align-items:center;justify-content:space-between;gap:var(--sp-2);flex-wrap:wrap}
+.site-footer a{color:#e9ecff;margin-right:1rem}
+.site-footer a:hover{color:var(--mint-100);text-decoration:none}
+
+/* ---------------------------
+   Utilities & print
+   --------------------------- */
+.hidden{display:none !important}
+.mt-0{margin-top:0 !important}
+.mb-0{margin-bottom:0 !important}
+@media print{
+  .site-header,.site-footer,.nav-toggle,.btn{display:none !important}
+  a{text-decoration:none !important}
+  body{color:#000}
+}
+
+/* mobile overflow guards */
+html,body{overflow-x:hidden}
+
+/* =========================
+   Home hero: split panels
+   ========================= */
+body.home .hero .hero-columns{
+  display:grid;
+  grid-template-columns:1.1fr max-content;
+  column-gap:64px;
+  align-items:start;
+  margin-top:24px;
+}
+@media (max-width:900px){
+  body.home .hero .hero-columns{grid-template-columns:1fr}
+}
+
+.info-card{
+  color:#fff;
+  background:rgba(17,19,22,.35);
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:16px;
+  padding:14px 20px;
+  box-shadow:0 10px 24px rgba(0,0,0,.12);
+  backdrop-filter:saturate(120%) blur(6px);
+  width:max-content;
+  max-width:480px;
+  justify-self:end;
+}
+.info-title{margin:0 0 .35rem;font-weight:700}
+.info-address{margin:.25rem 0 1rem}
+.info-sub{margin:.25rem 0 .5rem;font-weight:700}
+.info-hours{list-style:none;margin:0;padding:0}
+.info-hours li{
+  display:grid; grid-template-columns:140px auto;
+  align-items:baseline; gap:12px; margin:4px 0;
+}
+.info-hours .day{font-weight:700}
+.info-hours .time{text-align:right;white-space:nowrap}
+
+/* hide any leftover hero CTAs on home if present */
+body.home .hero .hero-ctas{display:none !important}
+
+/* =========================
+   Header layout: logo | contact | book | menu
+   ========================= */
+.site-header .container {
+  display: flex;
+  align-items: center;
+  gap: 17px;
+  min-height: 60px;          /* taller header bar */
+  padding-block: 12px;        /* adds a bit more vertical room */
+}
+
+
+.site-header .brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;               /* logo + text spacing */
+  flex: 0 0 auto;          /* fixed at left */
+}
+
+/* middle block fills the space */
+.quickbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* push contact left, button right */
+  flex: 1 1 auto;                 /* fill space between logo and menu */
+  min-width: 0;
+  padding-inline: 24px;           /* breathing room inside the middle area */
+}
+
+/* keep each item from shrinking too small */
+.contact-stack { min-width: 260px; }
+.btn-book { white-space: nowrap; }
+
+
+/* contact lines stack on two rows but stay compact */
+.contact-stack {
+  display: grid;
+  grid-auto-flow: row;
+  gap: 6px;
+  line-height: 1.2;
+}
+
+.contact-line {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  color: var(--ink-900);
+  text-decoration: none;
+}
+.contact-line:hover { text-decoration: underline; }
+
+/* book button stays tidy */
+.btn-book {
+  white-space: nowrap;
+  padding: 10px 16px;
+  border-radius: var(--radius-lg, 10px);
+}
+
+/* menu button stays at far right */
+.nav-toggle {
+  margin-left: 8px;
+  flex: 0 0 auto;            /* fixed at right */
+  width: 52px;
+  height: 52px;              /* taller button */
+  display: grid;
+  place-items: center;       /* centers the icon */
+  border-radius: 14px;       /* keep your rounded look */
+}
+
+
+/* small screens: keep both visible, tighten spacing */
+@media (max-width: 640px) {
+  .quickbar { gap: 12px; }
+  .btn-book { padding: 8px 12px; }
+  .contact-line { font-size: 14px; }
+}
