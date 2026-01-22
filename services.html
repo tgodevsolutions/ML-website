@@ -1,319 +1,192 @@
-// ===========================================================
-// Loughran Osteopathy - script.js
-// Handles:
-// 1) Mobile nav toggle + close on link/ESC/click-outside
-// 2) Smooth-scroll for same-page anchors (respects reduced motion)
-// 3) Footer year auto-fill
-// 4) Fix initial hash scroll with sticky header
-// ===========================================================
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Services & Pricing | Loughran Osteopathy</title>
+  <meta name="description" content="Osteopathic manual therapy services in Bradford, ON. Initial assessment and follow-up treatments with an OSTCAN certified practitioner." />
 
-document.addEventListener('DOMContentLoaded', () => {
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
-    // --- Home: match the left image height to the right cards stack ---
-  function syncAboutImageHeight() {
-    const cardsCol = document.querySelector('.about-preview .list-cards');
-    const imgEl    = document.querySelector('.about-preview .about-image img');
-    if (!cardsCol || !imgEl) return;
+  <!-- Styles (same folder) -->
+  <link rel="stylesheet" href="style.css" />
 
-    // Set the image height to the cards column height
-    const h = cardsCol.offsetHeight;
-    imgEl.style.height = h + 'px';
-    imgEl.style.width  = '100%';
-    imgEl.style.objectFit = 'cover';   // fill the box without distortion
-    imgEl.style.objectPosition = 'center';
-  }
+  <!-- Favicon -->
+  <link rel="icon" href="Images/Logo.png" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
 
-  // Run on load and when resizing
-  syncAboutImageHeight();
-  window.addEventListener('resize', syncAboutImageHeight);
+  <!-- Header / Navigation -->
+  <header class="site-header">
+    <div class="topbar">
+      <div class="container topbar-inner">
+        <a class="topbar-link" href="tel:+19057781888">
+          <span class="topbar-full">(905) 778-1888</span>
+          <span class="topbar-short">Call Now</span>
+        </a>
+        <span class="topbar-sep" aria-hidden="true">|</span>
+        <a class="topbar-link" href="mailto:ml.osteopathy@gmail.com">
+          <span class="topbar-full">ml.osteopathy@gmail.com</span>
+          <span class="topbar-short">Email Now</span>
+        </a>
+      </div>
+    </div>
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Loughran Osteopathy home">
+        <img src="Images/Logo.png" alt="Loughran Osteopathy logo" class="brand-logo" />
+        <span class="brand-text">Loughran Osteopathy</span>
+      </a>
 
-  const el = {
-    toggle: document.getElementById('menuToggle'),
-    nav: document.getElementById('siteNav'),
-    header: document.querySelector('.site-header'),
-    year: document.getElementById('year'),
-  };
+      <nav class="site-nav-inline" role="navigation" aria-label="Main navigation">
+        <ul>
+          <li><a href="services.html" aria-current="page">How We Help</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
 
-  // --------------------------
-  // Helpers
-  // --------------------------
-  const headerOffset = () => (el.header ? el.header.offsetHeight : 0);
-  const prefersReducedMotion = () =>
-    window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      <a class="btn btn-primary btn-book" href="booking.html">Book Appointment</a>
 
-  // --------------------------
-  // Home: slide-in cards on first scroll into view
-  // --------------------------
-  const listCards = document.querySelector('.about-preview .list-cards');
-  const aboutImage = document.querySelector('.about-preview .about-image');
-  const whatIsSection = document.querySelector('.what-is');
-  const offeringsSection = document.querySelector('.offerings-section');
-  const storySection = document.querySelector('.story-section');
-  const trustSection = document.querySelector('.trust-section');
-  if (listCards) {
-    if (prefersReducedMotion()) {
-      listCards.classList.add('is-revealed');
-    } else if ('IntersectionObserver' in window) {
-      listCards.classList.add('will-animate');
-      const observer = new IntersectionObserver(
-        (entries, obs) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              listCards.classList.add('is-revealed');
-              obs.disconnect();
-            }
-          });
-        },
-        { threshold: 0.25, rootMargin: '0px 0px -10% 0px' }
-      );
-      observer.observe(listCards);
-    } else {
-      listCards.classList.add('is-revealed');
-    }
-  }
+      <button id="menuToggle" class="nav-toggle" aria-expanded="false" aria-controls="siteNav" aria-label="Toggle navigation">
+        <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+      </button>
 
-  if (aboutImage) {
-    if (prefersReducedMotion()) {
-      aboutImage.classList.add('is-revealed');
-    } else if ('IntersectionObserver' in window) {
-      aboutImage.classList.add('will-animate');
-      const imageObserver = new IntersectionObserver(
-        (entries, obs) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              aboutImage.classList.add('is-revealed');
-              obs.disconnect();
-            }
-          });
-        },
-        { threshold: 0.35, rootMargin: '0px 0px -10% 0px' }
-      );
-      imageObserver.observe(aboutImage);
-    } else {
-      aboutImage.classList.add('is-revealed');
-    }
-  }
+      <nav id="siteNav" class="site-nav" role="navigation" aria-label="Mobile navigation">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="services.html" aria-current="page">How We Help</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="booking.html">Book Appointment</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main id="main">
+    <!-- Page Hero -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <h1>Services &amp; Pricing</h1>
+          <p>Gentle, hands-on osteopathic care tailored to your needs. We look beyond symptoms to address root causes—supporting better movement, balance, and overall health.</p>
+          <div class="hero-ctas">
+            <a href="booking.html" class="btn btn-primary">Book an Appointment</a>
+            <a href="contact.html" class="btn btn-outline">Questions?</a>
+          </div>
+          <ul class="hero-highlights">
+            <li>OSTCAN Certified Practitioner</li>
+            <li>Evidence-informed, whole-body approach</li>
+            <li>Bradford, Ontario</li>
+          </ul>
+        </div>
+        <div class="hero-media">
+          <img src="Images/ServicesPic1.jpeg" alt="Osteopathic treatment setting" class="hero-photo" />
+        </div>
+      </div>
+    </section>
 
-  if (whatIsSection) {
-    if (prefersReducedMotion()) {
-      whatIsSection.classList.add('is-revealed');
-    } else if ('IntersectionObserver' in window) {
-      whatIsSection.classList.add('will-animate');
-      const whatIsObserver = new IntersectionObserver(
-        (entries, obs) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              whatIsSection.classList.add('is-revealed');
-              obs.disconnect();
-            }
-          });
-        },
-        { threshold: 0.2, rootMargin: '0px 0px -10% 0px' }
-      );
-      whatIsObserver.observe(whatIsSection);
-    } else {
-      whatIsSection.classList.add('is-revealed');
-    }
-  }
+    <!-- Services Cards -->
+    <section class="about-preview offerings-section" id="offerings">
+      <div class="container">
+        <h2>What I Offer</h2>
+        <div class="feature-grid" style="margin-top: var(--sp-3);">
+          <article class="feature">
+            <h3>Initial Assessment &amp; Treatment</h3>
+            <p><strong>60–75 minutes</strong></p>
+            <p>A comprehensive health history, assessment, and first treatment. We’ll identify contributing factors and create a personalized plan.</p>
+            <ul class="contact-list" style="margin-top:.5rem;">
+              <li>Full-body assessment</li>
+              <li>Gentle, hands-on techniques</li>
+              <li>Personalized recommendations</li>
+            </ul>
+            <div class="center" style="margin-top: var(--sp-2);">
+              <a href="booking.html" class="btn btn-secondary">Book Initial Visit</a>
+            </div>
+          </article>
 
-  if (offeringsSection) {
-    if (prefersReducedMotion()) {
-      offeringsSection.classList.add('is-revealed');
-    } else if ('IntersectionObserver' in window) {
-      offeringsSection.classList.add('will-animate');
-      const offeringsObserver = new IntersectionObserver(
-        (entries, obs) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              offeringsSection.classList.add('is-revealed');
-              obs.disconnect();
-            }
-          });
-        },
-        { threshold: 0.2, rootMargin: '0px 0px -10% 0px' }
-      );
-      offeringsObserver.observe(offeringsSection);
-    } else {
-      offeringsSection.classList.add('is-revealed');
-    }
-  }
+          <article class="feature">
+            <h3>Follow-Up Treatment</h3>
+            <p><strong>45–60 minutes</strong></p>
+            <p>Ongoing care to support progress, improve mobility, and address the root cause for longer-lasting results.</p>
+            <ul class="contact-list" style="margin-top:.5rem;">
+              <li>Progress review</li>
+              <li>Focused treatment</li>
+              <li>Updated self-care plan</li>
+            </ul>
+            <div class="center" style="margin-top: var(--sp-2);">
+              <a href="booking.html" class="btn btn-secondary">Book Follow-Up</a>
+            </div>
+          </article>
 
-  if (storySection) {
-    if (prefersReducedMotion()) {
-      storySection.classList.add('is-revealed');
-    } else if ('IntersectionObserver' in window) {
-      storySection.classList.add('will-animate');
-      const storyObserver = new IntersectionObserver(
-        (entries, obs) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              storySection.classList.add('is-revealed');
-              obs.disconnect();
-            }
-          });
-        },
-        { threshold: 0.25, rootMargin: '0px 0px -10% 0px' }
-      );
-      storyObserver.observe(storySection);
-    } else {
-      storySection.classList.add('is-revealed');
-    }
-  }
+          <article class="feature">
+            <h3>Who I Help</h3>
+            <p>People seeking relief from pain, tension, or limited movement—at any life stage.</p>
+            <ul class="contact-list" style="margin-top:.5rem;">
+              <li>Neck, back, hip, and shoulder discomfort</li>
+              <li>Headaches and postural strain</li>
+              <li>Stress &amp; tension-related issues</li>
+              <li>General mobility and recovery support</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+    <!-- Approach -->
+    <section class="what-is" id="expect">
+      <div class="container">
+        <h2>My Approach to Care</h2>
+        <p>Osteopathy recognizes the relationship between the structure of the body and the way it functions. I use gentle, hands-on manipulations to assess and treat with the goal of restoring mobility, balance, and overall health.</p>
 
-  if (trustSection) {
-    if (prefersReducedMotion()) {
-      trustSection.classList.add('is-revealed');
-    } else if ('IntersectionObserver' in window) {
-      trustSection.classList.add('will-animate');
-      const trustObserver = new IntersectionObserver(
-        (entries, obs) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              trustSection.classList.add('is-revealed');
-              obs.disconnect();
-            }
-          });
-        },
-        { threshold: 0.2, rootMargin: '0px 0px -10% 0px' }
-      );
-      trustObserver.observe(trustSection);
-    } else {
-      trustSection.classList.add('is-revealed');
-    }
-  }
+        <div class="feature-grid">
+          <article class="feature">
+            <h3>Gentle &amp; personalized</h3>
+            <p>Comfortable, hands-on techniques tailored to your needs.</p>
+          </article>
+          <article class="feature">
+            <h3>Whole-body perspective</h3>
+            <p>Looks beyond symptoms to how systems--muscles, joints, circulation, nerves, and organs--work together.</p>
+          </article>
+          <article class="feature">
+            <h3>Root-cause focus</h3>
+            <p>Supports the body's natural ability to heal for longer-lasting results.</p>
+          </article>
+        </div>
 
-  const openNav = () => {
-  if (!el.nav || !el.toggle) return;
-  el.nav.classList.add('open');
-  el.toggle.setAttribute('aria-expanded', 'true');
-  document.body.style.overflow = 'hidden';   // lock background scroll
-};
+        <div class="center">
+          <a href="booking.html" class="btn btn-secondary">Book with Maria-Laura</a>
+        </div>
+      </div>
+    </section>
 
-const closeNav = () => {
-  if (!el.nav || !el.toggle) return;
-  el.nav.classList.remove('open');
-  el.toggle.setAttribute('aria-expanded', 'false');
-  document.body.style.overflow = '';         // restore scroll
-};
+    <!-- Notes -->
+    <section class="contact-strip contact-strip-purple">
+      <div class="container contact-grid">
+        <div>
+          <h3>Location &amp; Contact</h3>
+          <ul class="contact-list">
+            <li><strong>Phone:</strong> <a href="tel:+19057781888">(905) 778-1888</a></li>
+            <li><strong>Email:</strong> <a href="mailto:ml.osteopathy@gmail.com">ml.osteopathy@gmail.com</a></li>
+            <li><strong>Address:</strong> 487 Holland St W., L1, Bradford, ON, L3Z 0C1</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Good to Know</h3>
+          <p>Wear comfortable clothing you can move in. If you have recent imaging or reports, feel free to bring them along.</p>
+        </div>
+      </div>
+    </section>
 
+  </main>
 
-  const toggleNav = () => {
-    if (!el.nav || !el.toggle) return;
-    const isOpen = el.nav.classList.contains('open');
-    isOpen ? closeNav() : openNav();
-  };
+  <footer class="site-footer">
+  <div class="container footer-inner">
+    <p>&copy; 2026 Loughran Osteopathy Inc. All rights reserved.</p>
+  </div>
+</footer>
 
-  // Smooth scroll to a target element by id/hash with header offset
-  function smoothScrollToHash(hash) {
-    if (!hash || hash === '#') return;
-    const id = decodeURIComponent(hash.substring(1));
-    const target =
-      document.getElementById(id) ||
-      document.querySelector(`[name="${CSS.escape(id)}"]`);
-    if (!target) return;
-
-    const top =
-      window.pageYOffset + target.getBoundingClientRect().top - headerOffset();
-
-    if (prefersReducedMotion()) {
-      window.scrollTo(0, Math.max(0, top));
-    } else {
-      window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
-    }
-
-    // Move focus for accessibility
-    target.setAttribute('tabindex', '-1');
-    target.focus({ preventScroll: true });
-    // Clean up tabindex after focusing
-    setTimeout(() => target.removeAttribute('tabindex'), 1000);
-  }
-
-  // --------------------------
-  // 1) Mobile nav interactions
-  // --------------------------
-  if (el.toggle) {
-    el.toggle.addEventListener('click', (e) => {
-      e.stopPropagation();
-      toggleNav();
-    });
-  }
-
-  // Close on any nav link click
-  if (el.nav) {
-    el.nav.addEventListener('click', (e) => {
-      const link = e.target.closest('a');
-      if (!link) return;
-
-      // If it's an in-page anchor, smooth-scroll instead of full reload
-      const url = new URL(link.href, window.location.origin);
-      const isSamePage =
-        url.pathname.replace(/\/+$/, '') === window.location.pathname.replace(/\/+$/, '') &&
-        url.hash;
-
-      if (isSamePage) {
-        e.preventDefault();
-        closeNav();
-        smoothScrollToHash(url.hash);
-        history.replaceState(null, '', url.hash); // keep the hash in URL
-      } else {
-        closeNav();
-      }
-    });
-  }
-
-  // Close nav on ESC
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeNav();
-  });
-
-  // Close nav when clicking outside
-  document.addEventListener('click', (e) => {
-    if (!el.nav || !el.toggle) return;
-    const clickedInside =
-      el.nav.contains(e.target) || el.toggle.contains(e.target);
-    if (!clickedInside) closeNav();
-  });
-
-  // --------------------------
-  // 2) Smooth-scroll for same-page anchors anywhere in content
-  // --------------------------
-  document.querySelectorAll('a[href^="#"]').forEach((a) => {
-    a.addEventListener('click', (e) => {
-      const hash = a.getAttribute('href');
-      if (!hash || hash === '#') return;
-
-      e.preventDefault();
-      smoothScrollToHash(hash);
-      history.replaceState(null, '', hash);
-    });
-  });
-
-  // --------------------------
-  // 3) Footer year
-  // --------------------------
-  if (el.year) {
-    el.year.textContent = new Date().getFullYear();
-  }
-
-  // --------------------------
-  // 4) Adjust initial hash position on load (sticky header)
-  // --------------------------
-  if (window.location.hash) {
-    // Let browser jump first, then adjust
-    setTimeout(() => {
-      smoothScrollToHash(window.location.hash);
-    }, 0);
-  }
-
-  // --------------------------
-  // 5) Blur header on scroll
-  // --------------------------
-  const updateHeaderState = () => {
-    if (!el.header) return;
-    const isScrolled = window.scrollY > 10;
-    el.header.classList.toggle('is-scrolled', isScrolled);
-  };
-
-  updateHeaderState();
-  window.addEventListener('scroll', updateHeaderState, { passive: true });
-});
+  <script src="script.js" defer></script>
+</body>
+</html>
