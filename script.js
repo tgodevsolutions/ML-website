@@ -41,6 +41,147 @@ document.addEventListener('DOMContentLoaded', () => {
   const prefersReducedMotion = () =>
     window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // --------------------------
+  // Home: slide-in cards on first scroll into view
+  // --------------------------
+  const listCards = document.querySelector('.about-preview .list-cards');
+  const aboutImage = document.querySelector('.about-preview .about-image');
+  const whatIsSection = document.querySelector('.what-is');
+  const offeringsSection = document.querySelector('.offerings-section');
+  const storySection = document.querySelector('.story-section');
+  const trustSection = document.querySelector('.trust-section');
+  if (listCards) {
+    if (prefersReducedMotion()) {
+      listCards.classList.add('is-revealed');
+    } else if ('IntersectionObserver' in window) {
+      listCards.classList.add('will-animate');
+      const observer = new IntersectionObserver(
+        (entries, obs) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              listCards.classList.add('is-revealed');
+              obs.disconnect();
+            }
+          });
+        },
+        { threshold: 0.25, rootMargin: '0px 0px -10% 0px' }
+      );
+      observer.observe(listCards);
+    } else {
+      listCards.classList.add('is-revealed');
+    }
+  }
+
+  if (aboutImage) {
+    if (prefersReducedMotion()) {
+      aboutImage.classList.add('is-revealed');
+    } else if ('IntersectionObserver' in window) {
+      aboutImage.classList.add('will-animate');
+      const imageObserver = new IntersectionObserver(
+        (entries, obs) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              aboutImage.classList.add('is-revealed');
+              obs.disconnect();
+            }
+          });
+        },
+        { threshold: 0.35, rootMargin: '0px 0px -10% 0px' }
+      );
+      imageObserver.observe(aboutImage);
+    } else {
+      aboutImage.classList.add('is-revealed');
+    }
+  }
+
+  if (whatIsSection) {
+    if (prefersReducedMotion()) {
+      whatIsSection.classList.add('is-revealed');
+    } else if ('IntersectionObserver' in window) {
+      whatIsSection.classList.add('will-animate');
+      const whatIsObserver = new IntersectionObserver(
+        (entries, obs) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              whatIsSection.classList.add('is-revealed');
+              obs.disconnect();
+            }
+          });
+        },
+        { threshold: 0.2, rootMargin: '0px 0px -10% 0px' }
+      );
+      whatIsObserver.observe(whatIsSection);
+    } else {
+      whatIsSection.classList.add('is-revealed');
+    }
+  }
+
+  if (offeringsSection) {
+    if (prefersReducedMotion()) {
+      offeringsSection.classList.add('is-revealed');
+    } else if ('IntersectionObserver' in window) {
+      offeringsSection.classList.add('will-animate');
+      const offeringsObserver = new IntersectionObserver(
+        (entries, obs) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              offeringsSection.classList.add('is-revealed');
+              obs.disconnect();
+            }
+          });
+        },
+        { threshold: 0.2, rootMargin: '0px 0px -10% 0px' }
+      );
+      offeringsObserver.observe(offeringsSection);
+    } else {
+      offeringsSection.classList.add('is-revealed');
+    }
+  }
+
+  if (storySection) {
+    if (prefersReducedMotion()) {
+      storySection.classList.add('is-revealed');
+    } else if ('IntersectionObserver' in window) {
+      storySection.classList.add('will-animate');
+      const storyObserver = new IntersectionObserver(
+        (entries, obs) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              storySection.classList.add('is-revealed');
+              obs.disconnect();
+            }
+          });
+        },
+        { threshold: 0.25, rootMargin: '0px 0px -10% 0px' }
+      );
+      storyObserver.observe(storySection);
+    } else {
+      storySection.classList.add('is-revealed');
+    }
+  }
+
+  if (trustSection) {
+    if (prefersReducedMotion()) {
+      trustSection.classList.add('is-revealed');
+    } else if ('IntersectionObserver' in window) {
+      trustSection.classList.add('will-animate');
+      const trustObserver = new IntersectionObserver(
+        (entries, obs) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              trustSection.classList.add('is-revealed');
+              obs.disconnect();
+            }
+          });
+        },
+        { threshold: 0.2, rootMargin: '0px 0px -10% 0px' }
+      );
+      trustObserver.observe(trustSection);
+    } else {
+      trustSection.classList.add('is-revealed');
+    }
+  }
+
   const openNav = () => {
   if (!el.nav || !el.toggle) return;
   el.nav.classList.add('open');
@@ -163,4 +304,16 @@ const closeNav = () => {
       smoothScrollToHash(window.location.hash);
     }, 0);
   }
+
+  // --------------------------
+  // 5) Blur header on scroll
+  // --------------------------
+  const updateHeaderState = () => {
+    if (!el.header) return;
+    const isScrolled = window.scrollY > 10;
+    el.header.classList.toggle('is-scrolled', isScrolled);
+  };
+
+  updateHeaderState();
+  window.addEventListener('scroll', updateHeaderState, { passive: true });
 });
